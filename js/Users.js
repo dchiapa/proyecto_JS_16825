@@ -8,17 +8,30 @@ class Users {
   createUser() {
     //? Método que crea un usuario si no existe
     this.validateName();
-    this.validateEmail();
-    if (this.userEmail !== "ESC") {
-      this.validatePassword();
-      this.id = usersList.length + 1;
-      usersList.push({
-        id: this.id,
-        userName: this.userName,
-        userEmail: this.userEmail,
-        userPassword: this.userPassword,
-      });
-    }
+    if (this.userName !== null) {
+      this.validateEmail();
+      if (this.userEmail !== "ESC" && this.userEmail !== null) {
+        this.validatePassword();
+        if (this.userPassword !== null) {
+          this.id = usersList.length + 1;
+          usersList.push({
+            id: this.id,
+            userName: this.userName,
+            userEmail: this.userEmail,
+            userPassword: this.userPassword,
+          });
+          this.newUser = true;
+        } else this.newUser = false;
+      } else this.newUser = false;
+    } else this.newUser = false;
+    if (!this.newUser) {
+      alert(
+        "El usuario no ha sido creado.\nPara volver a comenzar recargue la página"
+      );
+    } else
+      alert(
+        `Usuario creado con éxito\nNombre de usuario: ${this.userName}\nEmail: ${this.userEmail}`
+      );
   }
   deleteUser() {
     //? Método que elimina un usuario, si existe
@@ -45,18 +58,13 @@ class Users {
       this.userName = prompt("Ingrese el nombre de usuario:");
     } while (
       usersList.find((user) => user.userName === this.userName) ||
-      this.userName === "" ||
-      this.userName === null
+      this.userName === ""
     );
   }
   validateEmail() {
     do {
       this.userEmail = prompt("Ingrese su email:");
-    } while (
-      this.userEmail === "" ||
-      this.userEmail === null ||
-      this.userEmail === "ESC"
-    );
+    } while (this.userEmail === "" || this.userEmail === "ESC");
     if (usersList.find((user) => user.userEmail == this.userEmail)) {
       alert(
         "El mail ingresado ya esta asociado a una cuenta.\nPor favor recupere su contraseña o ingrese a la plataforma."
@@ -67,6 +75,6 @@ class Users {
   validatePassword() {
     do {
       this.userPassword = prompt("Ingrese su contraseña:");
-    } while (this.userPassword === "" || this.userPassword === null);
+    } while (this.userPassword === "");
   }
 }
