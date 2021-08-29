@@ -1,0 +1,14 @@
+      <section class="profile">
+        <img
+          class="profile__img"
+          src="https://dragonball.guru/wp-content/uploads/2021/03/goku-profile-e1616173641804.png"
+          alt="Goku"
+        />
+        <h2 class="profile__title">Goku</h2>
+        <button class="profile__link"></button>
+        <button class="profile__link"></button>
+        <button class="profile__link"></button>
+        <button class="profile__link"></button>
+        <button class="profile__link"></button>
+        <button class="profile__link"></button>
+      </section>
