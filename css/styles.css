@@ -123,7 +123,9 @@ body {
 /* ----- NAV ----- */
 /* ----- MAIN ----- */
 main {
+  align-items: center;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: space-evenly;
@@ -203,6 +205,9 @@ main {
 .profile__link:active,
 .user__btn:hover {
   box-shadow: none;
+}
+.hide {
+  display: none;
 }
 /* ----- MAIN ----- */
 /* ----- FOOTER ----- */

@@ -18,7 +18,7 @@ class Interface {
       this.userProfile.classList.add("profile__preview");
       this.userImg = document.createElement("img");
       this.userImg.classList.add("profile__img");
-      this.userImg.src = user.userPicture;
+      this.userImg.src = user.userImage;
       this.userImg.alt = user.userName;
       this.userName = document.createElement("h2");
       this.userName.classList.add("profile__title");
