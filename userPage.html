@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perfil de usuario</title>
+    <title>LinksPage</title>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
@@ -15,59 +15,23 @@
       </div>
       <ul class="nav__content">
         <li class="nav__item">
+          <a class="nav__link" href="newUser.html">Nuevo usuario</a>
+        </li>
+        <li class="nav__item">
           <a class="nav__link" href="usersList.html">Listar usuarios</a>
+        </li>
+        <li class="nav__item">
+          <a class="nav__link" href="login.html">Entrar</a>
         </li>
       </ul>
     </nav>
-    <main class="content">
-      <h1 class="content__title">Datos del usuario</h1>
-      <form class="user">
-        <label class="user__label" for="userName">
-          Nombre de usuario<span>*</span>:
-        </label>
-        <input
-          class="user__userName user__input"
-          type="text"
-          name="userName"
-          id="userName"
-          disabled
-        />
-        <label class="user__label" for="userEmail">
-          Email(si lo deja vacío no se modificará):
-        </label>
-        <input
-          class="user__UserEmail user__input"
-          type="email"
-          name="useEmail"
-          id="userEmail"
-        />
-        <label class="user__label" for="userPassword">
-          Contraseña(si lo deja vacío no se modificará):
-        </label>
-        <input
-          class="user__userPassword user__input"
-          type="password"
-          name="userPassword"
-          id="userPassword"
-        />
-        <label class="user__label" for="userImage">
-          Avatar (si lo deja vacío no se modificará):
-        </label>
-        <input
-          class="user__userImage user__input"
-          type="text"
-          name="userImage"
-          id="userImage"
-        />
-        <button class="user__btn" type="submit">Modificar Usuario</button>
-      </form>
-    </main>
+    <main class="content"></main>
     <footer class="footer">
       <p class="footer__text">&copy; Diego Chiapa - 2021</p>
     </footer>
-    <script src="js/Menu.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/Storage.js"></script>
-    <script src="js/Users.js"></script>
+    <script src="js/Interface.js"></script>
     <script src="js/userPage.js"></script>
   </body>
 </html>

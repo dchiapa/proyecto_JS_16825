@@ -1,4 +1,5 @@
 const users = new Users();
+const lStorage = new Storage();
 const form = document.querySelector(".user");
 const formBtn = form.querySelector(".user__btn");
 const userName = form.querySelector("#userName");
@@ -19,7 +20,9 @@ formBtn.addEventListener("click", function (e) {
       userPassword.value,
       userImage.value
     );
-    limpiarInputs();
+    const user = JSON.stringify(users.getUser(userName.value, "login"));
+    lStorage.storageSetUserSession(user);
+    window.location.href = "./userAdmin.html";
   } else {
     alert("Hay campos obligatorios vacíos");
   }

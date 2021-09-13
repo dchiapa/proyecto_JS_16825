@@ -4,10 +4,19 @@ class Users {
   constructor() {}
   //* Manejo de usuarios
   createUser(userName, userEmail, userPassword, userImage) {
-    this.userName = userName;
-    this.userEmail = userEmail;
-    this.userPassword = userPassword;
-    this.userImage = userImage;
+    console.log(userName, userEmail, userPassword, userImage);
+    if (typeof userName != "object") {
+      this.userName = userName;
+      this.userEmail = userEmail;
+      this.userPassword = userPassword;
+      this.userImage = userImage;
+    } else {
+      this.userName = userName.userName;
+      this.userEmail = userName.userEmail;
+      this.userPassword = userName.userPassword;
+      this.userImage = userName.userImage;
+    }
+
     this.usersList = storage.storageGetUsers();
     this.validateName();
     this.validateEmail();
@@ -22,7 +31,8 @@ class Users {
           userName: this.userName,
           userEmail: this.userEmail,
           userPassword: this.userPassword,
-          userPicture: this.userImage,
+          userImage: this.userImage,
+          userLinks: [],
         });
         storage.storageUpdateUsersList();
         this.newUser = true;
@@ -50,32 +60,44 @@ class Users {
       this.user = this.usersList.find((user) => user.userName === userName);
       if (!this.user) {
         this.user = null;
-        alert("Usuario no encontrado");
       }
     }
     if (page === "login") {
       return this.user;
     }
   }
-  updateUser(userName, userEmail, userPassword, userImage) {
+  updateUser(userName, userEmail, userPassword, userImage, userLinks, datos) {
     this.userName = userName;
     this.userEmail = userEmail;
     this.userPassword = userPassword;
     this.userImage = userImage;
+    this.userLinks = userLinks;
     this.getUser(userName);
+    this.usersList = storage.storageGetUsers();
     if (this.user) {
-      this.validateName(true);
-      if (this.userName !== null) {
-        this.validateEmail();
-        if (this.userEmail !== null && this.userPassword !== null) {
-          if (this.userImage === "") {
-            this.userImage =
-              "https://dragonball.guru/wp-content/uploads/2021/03/goku-profile-e1616173641804.png";
+      this.validateEmail(true);
+      if (this.userEmail !== null && this.userPassword !== null) {
+        if (this.userImage === "") {
+          this.userImage =
+            "https://dragonball.guru/wp-content/uploads/2021/03/goku-profile-e1616173641804.png";
+        }
+        if (this.userName) {
+          if (datos === "user") {
+            if (
+              this.userEmail === this.user.userEmail &&
+              this.userPassword === this.user.userPassword &&
+              this.userImage === this.user.userImage
+            ) {
+              return "Iguales";
+            }
           }
+          this.user.userEmail = this.userEmail;
+          this.user.userPassword = this.userPassword;
+          this.user.userImage = this.userImage;
+          this.user.userLinks = this.userLinks;
+          this.usersList[this.user.id - 1] = this.user;
           storage.storageUpdateUsersList();
-          alert(
-            `Usuario actualizado\nUserName: ${this.userName}\n Email: ${this.userEmail}`
-          );
+          return "Actualizado";
         }
       }
     }
@@ -86,34 +108,36 @@ class Users {
   //* Manejo de usuarios
   //* Validaciones
   validateName(update = false) {
-    if (
-      this.usersList &&
-      this.usersList.find((user) => user.userName === this.userName)
-    ) {
-      if (update !== true) {
+    if (update !== true) {
+      if (
+        this.usersList &&
+        this.usersList.find((user) => user.userName === this.userName)
+      ) {
         alert("El nombre de usuario ya existe");
         this.userName = null;
       }
     }
   }
   validateEmail(update = false) {
-    if (
-      this.usersList &&
-      this.usersList.find((user) => user.userEmail == this.userEmail)
-    ) {
-      if (update !== true) {
-        alert(
-          "El mail ingresado ya esta asociado a una cuenta.\nPor favor recupere su contraseña o ingrese a la plataforma."
-        );
-        this.userName = null;
-      } else {
-        const re =
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!re.test(String(this.userName).toLowerCase())) {
-          alert("El mail ingresado no es válido");
-          this.userName = null;
-        }
+    if (update !== true) {
+      if (
+        this.usersList &&
+        this.usersList.find((user) => user.userEmail == this.userEmail)
+      ) {
+        alert("El mail ingresado ya esta asociado a una cuenta.");
+        this.userEmail = null;
+        return;
       }
+    } else {
+      if (this.usersList.find((user) => user.userEmail == this.userEmail)) {
+        return;
+      }
+    }
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!re.test(String(this.userEmail).toLowerCase())) {
+      alert("El mail ingresado no es válido");
+      this.userEmail = null;
     }
   }
   //* Validaciones
