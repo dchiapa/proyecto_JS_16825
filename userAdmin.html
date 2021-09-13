@@ -21,8 +21,7 @@
     </nav>
     <main class="content">
       <h1 class="content__title">Datos del usuario</h1>
-      <h2 class="content__subtitle" id="user">Administrar datos del usuario</h2>
-      <form class="user hide">
+      <form class="user__form">
         <label class="user__label" for="userName"> Nombre de usuario: </label>
         <input
           class="user__userName user__input"
@@ -56,10 +55,10 @@
           name="userImage"
           id="userImage"
         />
-        <button class="user__btn" type="submit">Actualizar Usuario</button>
+        <button class="user__btn" type="button">Actualizar Usuario</button>
       </form>
-      <h2 class="content__subtitle" id="links">Administrar links</h2>
-      <ul class="links hide"></ul>
+      <h2 class="content__subtitle">links</h2>
+      <ul class="links"></ul>
     </main>
     <footer class="footer">
       <p class="footer__text">&copy; Diego Chiapa - 2021</p>
@@ -67,6 +66,6 @@
     <script src="js/Menu.js"></script>
     <script src="js/Storage.js"></script>
     <script src="js/Users.js"></script>
-    <script src="js/userAdminPage.js"></script>
+    <script src="js/userAdmin.js"></script>
   </body>
 </html>

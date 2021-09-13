@@ -4,10 +4,19 @@ class Users {
   constructor() {}
   //* Manejo de usuarios
   createUser(userName, userEmail, userPassword, userImage) {
-    this.userName = userName;
-    this.userEmail = userEmail;
-    this.userPassword = userPassword;
-    this.userImage = userImage;
+    console.log(userName, userEmail, userPassword, userImage);
+    if (typeof userName != "object") {
+      this.userName = userName;
+      this.userEmail = userEmail;
+      this.userPassword = userPassword;
+      this.userImage = userImage;
+    } else {
+      this.userName = userName.userName;
+      this.userEmail = userName.userEmail;
+      this.userPassword = userName.userPassword;
+      this.userImage = userName.userImage;
+    }
+
     this.usersList = storage.storageGetUsers();
     this.validateName();
     this.validateEmail();
@@ -57,7 +66,7 @@ class Users {
       return this.user;
     }
   }
-  updateUser(userName, userEmail, userPassword, userImage, userLinks) {
+  updateUser(userName, userEmail, userPassword, userImage, userLinks, datos) {
     this.userName = userName;
     this.userEmail = userEmail;
     this.userPassword = userPassword;
@@ -73,22 +82,22 @@ class Users {
             "https://dragonball.guru/wp-content/uploads/2021/03/goku-profile-e1616173641804.png";
         }
         if (this.userName) {
-          if (
-            this.userEmail !== this.user.userEmail ||
-            this.userPassword !== this.user.userPassword ||
-            this.userImage !== this.user.userImage ||
-            this.userLinks !== this.user.userLinks
-          ) {
-            this.user.userEmail = this.userEmail;
-            this.user.userPassword = this.userPassword;
-            this.user.userImage = this.userImage;
-            this.user.userLinks = this.userLinks;
-            this.usersList[this.user.id - 1] = this.user;
-            storage.storageUpdateUsersList();
-            return "Actualizado";
-          } else {
-            return "Iguales";
+          if (datos === "user") {
+            if (
+              this.userEmail === this.user.userEmail &&
+              this.userPassword === this.user.userPassword &&
+              this.userImage === this.user.userImage
+            ) {
+              return "Iguales";
+            }
           }
+          this.user.userEmail = this.userEmail;
+          this.user.userPassword = this.userPassword;
+          this.user.userImage = this.userImage;
+          this.user.userLinks = this.userLinks;
+          this.usersList[this.user.id - 1] = this.user;
+          storage.storageUpdateUsersList();
+          return "Actualizado";
         }
       }
     }

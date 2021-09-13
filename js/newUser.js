@@ -22,7 +22,7 @@ formBtn.addEventListener("click", function (e) {
     );
     const user = JSON.stringify(users.getUser(userName.value, "login"));
     lStorage.storageSetUserSession(user);
-    window.location.href = "./userAdminPage.html";
+    window.location.href = "./userAdmin.html";
   } else {
     alert("Hay campos obligatorios vacíos");
   }

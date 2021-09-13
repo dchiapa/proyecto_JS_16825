@@ -1,46 +1,36 @@
 const users = new Users();
 const lStorage = new Storage();
-const form = document.querySelector(".user");
+const form = document.querySelector(".user__form");
 const formBtn = form.querySelector(".user__btn");
 const userName = form.querySelector("#userName");
 const userEmail = form.querySelector("#userEmail");
 const userPassword = form.querySelector("#userPassword");
 const userImage = form.querySelector("#userImage");
-const subtitles = document.querySelectorAll(".content__subtitle");
-let userLinks = [];
-
-const limpiarInputs = () => {
-  userName.value = "";
-  userEmail.value = "";
-  userPassword.value = "";
-  userImage.value = "";
-};
+userLinks = [];
 
 const createLinks = (user) => {
   userLinks = user.userLinks;
   if (userLinks.length > 0) {
     for (userLink of userLinks) {
+      const index = userLinks.indexOf(userLink);
       const item = document.createElement("li");
-      item.classList.add("user__item");
+      item.classList.add("link__item");
+      item.setAttribute("data-index", index);
       const linkDescription = document.createElement("input");
-      linkDescription.classList.add("user__linkDescription");
-      linkDescription.value = userLink.linkDescription;
+      linkDescription.classList.add("link__Description");
+      linkDescription.value = userLink.link;
       item.appendChild(linkDescription);
       const linkUrl = document.createElement("input");
-      linkUrl.classList.add("user__linkUrl");
-      linkUrl.value = userLink.linkUrl;
+      linkUrl.classList.add("link__Url");
+      linkUrl.value = userLink.url;
       item.appendChild(linkUrl);
       const btnUpdate = document.createElement("button");
-      btnUpdate.classList.add("user__btn");
-      btnUpdate.classList.add("user__btn--update");
+      btnUpdate.classList.add("link__btn--update");
       btnUpdate.innerHTML = "Actualizar";
-      btnUpdate.setAttribute("data-target", userLink.name);
       item.appendChild(btnUpdate);
       const btnDelete = document.createElement("button");
-      btnDelete.classList.add("user__btn");
-      btnDelete.classList.add("user__btn--delete");
+      btnDelete.classList.add("link__btn--delete");
       btnDelete.innerHTML = "Eliminar";
-      btnDelete.setAttribute("data-target", userLink.name);
       item.appendChild(btnDelete);
       document.querySelector(".links").appendChild(item);
     }
@@ -48,67 +38,66 @@ const createLinks = (user) => {
   const item = document.createElement("li");
   item.classList.add("user__item");
   const linkLabelDescription = document.createElement("label");
-  linkLabelDescription.classList.add("user__linkLabel");
+  linkLabelDescription.classList.add("link__Label");
   linkLabelDescription.innerHTML = "Descripción:";
   item.appendChild(linkLabelDescription);
   const linkDescription = document.createElement("input");
-  linkDescription.classList.add("user__linkDescription");
+  linkDescription.classList.add("link__Description");
   item.appendChild(linkDescription);
   const linkLabelUrl = document.createElement("label");
-  linkLabelUrl.classList.add("user__linkLabel");
+  linkLabelUrl.classList.add("link__Label");
   linkLabelUrl.innerHTML = "Url:";
   item.appendChild(linkLabelUrl);
   const linkUrl = document.createElement("input");
-  linkUrl.classList.add("user__linkUrl");
+  linkUrl.classList.add("link__Url");
   item.appendChild(linkUrl);
   const btn = document.createElement("button");
-  btn.classList.add("user__btn");
-  btn.classList.add("user__btn--create");
+  btn.classList.add("link__btn--create");
   btn.innerHTML = "Agregar";
   btn.setAttribute("data-target", userName.value);
   item.appendChild(btn);
   document.querySelector(".links").appendChild(item);
-  createListeners(user);
 };
+const createLinkListeners = () => {
+  const linkBtnsUpdate = document.querySelectorAll(".link__btn--update");
+  const linkBtnsDelete = document.querySelectorAll(".link__btn--delete");
+  const linkBtnCreate = document.querySelector(".link__btn--create");
 
-const createListeners = (user) => {
-  const buttons = document.querySelectorAll(".user__btn");
-  for (button of buttons) {
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (button.classList.contains("user__btn--create")) {
-        const inputValues = getInputsValues();
-        console.log(inputValues);
-        if (inputValues !== undefined) {
-          users.updateUser(
-            user.userName,
-            user.userEmail,
-            user.userPassword,
-            user.userImage,
-            user.userLinks
-          );
-          alert("Link agregado");
-        } else {
-          alert("Ingrese una descripción y una url");
-        }
-        console.log(users.getUser(user.userName, "login"));
-      } else if (button.classList.contains("user__btn--update")) {
-        console.log("Actualizar");
-      } else if (button.classList.contains("user__btn--update")) {
-        console.log("Eliminar");
-      }
+  linkBtnCreate.addEventListener("click", (e) => {
+    const linkDescription =
+      e.target.parentElement.querySelector(".link__Description");
+    const linkUrl = e.target.parentElement.querySelector(".link__Url");
+    if (linkDescription.value === "" || linkUrl.value === "") {
+      alert("Debe ingresar una descripción y un link");
+    } else {
+      userLinks.push({ link: linkDescription.value, url: linkUrl.value });
+      console.log(userLinks);
+      alert("Link agregado");
+      updateUser("Link");
+    }
+  });
+  linkBtnsDelete.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      userLinks.splice(e.target.parentElement.getAttribute("data-index"), 1);
+      updateUser("Link");
     });
-  }
-};
-
-const getInputsValues = () => {
-  const inputDescription = document.querySelector(
-    ".user__linkDescription"
-  ).value;
-  const inputUrl = document.querySelector(".user__linkUrl").value;
-  if (inputDescription !== "" && inputUrl !== "") {
-    return { Description: inputDescription, url: inputUrl };
-  } else return;
+  });
+  linkBtnsUpdate.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const linkDescription =
+        e.target.parentElement.querySelector(".link__Description");
+      const linkUrl = e.target.parentElement.querySelector(".link__Url");
+      if (linkDescription.value === "" || linkUrl.value === "") {
+        alert("Debe ingresar una descripción y un link");
+      } else {
+        userLinks[e.target.parentElement.getAttribute("data-index")] = {
+          link: linkDescription.value,
+          url: linkUrl.value,
+        };
+      }
+      updateUser("Link");
+    });
+  });
 };
 const pageLoad = () => {
   user = lStorage.storageGetUserSession();
@@ -120,17 +109,14 @@ const pageLoad = () => {
     userImage.value = user.userImage;
     userLinks = user.userLinks;
     createLinks(user);
+    createLinkListeners();
   }
   setTimeout(() => {
     lStorage.storageEndUserSession();
     window.location.href = "index.html";
   }, 1800000);
 };
-
-window.addEventListener("load", pageLoad());
-
-formBtn.addEventListener("click", function (e) {
-  e.preventDefault();
+function updateUser(datos) {
   if (userEmail.value === "") {
     alert("Rellenar los campos obligatorios");
   } else {
@@ -140,30 +126,24 @@ formBtn.addEventListener("click", function (e) {
     if (userImage.value === "") {
       userImage.value = user.userImage;
     }
-    user.userEmail = userEmail.value;
-    user.userPassword = userPassword.value;
-    user.userImage = userImage.value;
     const actualizado = users.updateUser(
       userName.value,
       userEmail.value,
       userPassword.value,
-      userImage.value
+      userImage.value,
+      userLinks,
+      datos
     );
     if (actualizado === "Actualizado") {
       alert(`Usuario ${userName.value} actualizado`);
       lStorage.storageEndUserSession();
       window.location.href = "index.html";
-      limpiarInputs();
     } else if (actualizado === "Iguales") {
       alert(`No hay datos que actualizar`);
+      userPassword.value = "";
     }
   }
-});
+}
 
-subtitles.forEach((subtitle) => {
-  subtitle.addEventListener("click", function () {
-    const id = subtitle.id;
-    const section = document.querySelector(`.${id}`);
-    section.classList.toggle("hide");
-  });
-});
+window.addEventListener("load", pageLoad());
+formBtn.addEventListener("click", () => updateUser("user"));

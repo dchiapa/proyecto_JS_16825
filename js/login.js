@@ -1,29 +1,32 @@
 const users = new Users();
 const lStorage = new Storage();
-const form = document.querySelector(".user");
-const formBtn = form.querySelector(".user__btn");
-const userName = form.querySelector("#userName");
-const userPassword = form.querySelector("#userPassword");
+const form = $(".user");
+const formBtn = $(".user__btn");
+const userName = $("#userName");
+const userPassword = $("#userPassword");
 
-window.addEventListener("load", () => {
+$("window").on("load", () => {
   if (lStorage.storageGetUserSession().length > 0) {
     window.location.href = "./userPage.html";
   }
 });
 
-formBtn.addEventListener("click", (e) => {
+formBtn.on("click", (e) => {
   e.preventDefault();
-  if (userName.value !== "" && userPassword.value !== "") {
-    const user = users.getUser(userName.value, "login");
+  const userNameValue = userName.val();
+  const userPasswordValue = userPassword.val();
+
+  if (userNameValue !== "" && userPasswordValue !== "") {
+    const user = users.getUser(userNameValue, "login");
     if (user) {
-      if (user.userPassword === userPassword.value) {
+      if (user.userPassword === userPasswordValue) {
         const loggedUser = JSON.stringify({
           ...user,
           login: new Date(),
         });
         lStorage.storageSetUserSession(loggedUser);
         alert("Bienvenido");
-        window.location.href = "userAdminPage.html";
+        window.location.href = "userAdmin.html";
       } else {
         alert("Usuario o contraseña incorrectos");
       }
