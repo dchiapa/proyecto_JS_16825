@@ -1,10 +1,10 @@
-# proyecto_JS_16825
+# Proyecto_JS_16825
 
-Proyecto del curso JavaScript de CoderHouse, camada 16825
+Proyecto del curso JavaScript de CoderHouse, camada 16825.
 
 # Recursos utilizados:
 
-- Programacion: JS, y JQuery como requerimientos del curso.
+- Programacion: JS y JQuery como requerimientos del curso.
 
 - Persistencia de datos: localStorage y sessionStorage.
 
