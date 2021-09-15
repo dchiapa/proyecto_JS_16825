@@ -66,7 +66,7 @@ class Interface {
       "No hay usuarios en la base de datos. Puede agregar usuarios en la página principal.";
     this.message.append(this.messageText);
     this.btn = $("<button></button>");
-    this.btn[0].classList.add("message__btn");
+    this.btn[0].classList.add("btn");
     this.btn[0].textContent = "Agregar usuarios desde api";
     this.btn.on("click", () => this.addUser());
     this.message.append(this.btn);
