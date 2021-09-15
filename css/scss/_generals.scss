@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+body {
+  background-color: $background-color;
+}
+main {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-evenly;
+  margin: 1rem auto;
+  min-height: calc(100vh - 152px);
+  width: 80%;
+  @media screen and (min-width: 768px) {
+    width: 70%;
+  }
+  @media screen and (min-width: 992px) {
+    width: 80%;
+  }
+}
+section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}

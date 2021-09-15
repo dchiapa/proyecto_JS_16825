@@ -19,12 +19,12 @@
         </li>
       </ul>
     </nav>
-    <main class="content">
+    <main class="content admin">
       <h1 class="content__title">Datos del usuario</h1>
       <form class="user__form">
         <label class="user__label" for="userName"> Nombre de usuario: </label>
         <input
-          class="user__userName user__input"
+          class="user__userName"
           type="text"
           name="userName"
           id="userName"
@@ -34,7 +34,7 @@
           Email<span>*</span>:
         </label>
         <input
-          class="user__UserEmail user__input"
+          class="user__UserEmail"
           type="email"
           name="useEmail"
           id="userEmail"
@@ -43,27 +43,27 @@
           Contraseña (si lo deja vacío no se modificará):
         </label>
         <input
-          class="user__userPassword user__input"
+          class="user__userPassword"
           type="password"
           name="userPassword"
           id="userPassword"
         />
         <label class="user__label" for="userImage"> Avatar: </label>
         <input
-          class="user__userImage user__input"
+          class="user__userImage"
           type="text"
           name="userImage"
           id="userImage"
         />
-        <button class="user__btn" type="button">Actualizar Usuario</button>
+        <button class="btn" type="button">Actualizar Usuario</button>
       </form>
       <h2 class="content__subtitle">links</h2>
-      <ul class="links"></ul>
+      <ul class="links user__form"></ul>
     </main>
     <footer class="footer">
       <p class="footer__text">&copy; Diego Chiapa - 2021</p>
     </footer>
-    <script src="js/Menu.js"></script>
+    <script src="js/menu.js"></script>
     <script src="js/Storage.js"></script>
     <script src="js/Users.js"></script>
     <script src="js/userAdmin.js"></script>

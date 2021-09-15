@@ -1,7 +1,7 @@
 const users = new Users();
 const lStorage = new Storage();
 const form = $(".user");
-const formBtn = $(".user__btn");
+const formBtn = $(".btn");
 const userName = $("#userName");
 const userPassword = $("#userPassword");
 

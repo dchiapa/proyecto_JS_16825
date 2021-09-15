@@ -1,6 +1,6 @@
 class Interface {
   constructor() {
-    this.container = $(".content");
+    this.container = $(".content__users");
   }
   showUsers(users) {
     switch (users.length) {
@@ -16,18 +16,18 @@ class Interface {
     if (user.userLinks.length > 0) {
       this.userProfile = $("<article></article>");
       this.userProfile[0].classList.add("profile");
-      this.userName = $("<h1></h1>");
-      this.userName[0].classList.add("profile__title");
-      this.userName[0].textContent = user.userName;
       this.userImg = $("<img/>");
       this.userImg[0].classList.add("profile__img");
       this.userImg[0].src = user.userImage;
       this.userImg[0].alt = user.userName;
-      this.userProfile[0].append(this.userName[0]);
+      this.userName = $("<h1></h1>");
+      this.userName[0].classList.add("profile__title");
+      this.userName[0].textContent = user.userName;
       this.userProfile[0].append(this.userImg[0]);
+      this.userProfile[0].append(this.userName[0]);
       user.userLinks.forEach((link) => {
         this.userLink = $("<a></a>");
-        this.userLink[0].classList.add("profile__link");
+        this.userLink[0].classList.add("btn");
         this.userLink[0].href = link.url;
         this.userLink[0].textContent = link.link;
         this.userLink[0].target = "_blank";
@@ -36,13 +36,14 @@ class Interface {
       $(".content").append(this.userProfile);
     } else {
       alert("No hay enlaces para mostrar");
-      window.location.href = "index.html";
+      window.location.href = "usersList.html";
     }
   }
   loadUsers(users) {
     for (let user of users) {
       this.userProfile = $("<article></article>");
-      this.userProfile[0].classList.add("profile__preview");
+      this.userProfile[0].classList.add("profile");
+      this.userProfile[0].classList.add("profile__card");
       this.userProfile[0].setAttribute("data-user", user.userName);
       this.userImg = $("<img/>");
       this.userImg[0].classList.add("profile__img");
@@ -94,5 +95,8 @@ class Interface {
       users.createUser(this.user);
       window.location.reload();
     });
+  }
+  removeUsers() {
+    this.container.empty();
   }
 }

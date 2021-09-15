@@ -2,7 +2,6 @@ const storage = new Storage();
 
 class Users {
   constructor() {}
-  //* Manejo de usuarios
   createUser(userName, userEmail, userPassword, userImage) {
     console.log(userName, userEmail, userPassword, userImage);
     if (typeof userName != "object") {
@@ -102,11 +101,6 @@ class Users {
       }
     }
   }
-  showUser() {
-    //? Método que obtiene un usuario por nombre
-  }
-  //* Manejo de usuarios
-  //* Validaciones
   validateName(update = false) {
     if (update !== true) {
       if (
@@ -140,5 +134,4 @@ class Users {
       this.userEmail = null;
     }
   }
-  //* Validaciones
 }

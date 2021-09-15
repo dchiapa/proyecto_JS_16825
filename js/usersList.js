@@ -3,10 +3,13 @@ const interface = new Interface();
 const lstorage = new Storage();
 const api_URL = "https://jsonplaceholder.typicode.com/users/";
 
-const usersList = storage.storageGetUsers();
+let usersList = storage.storageGetUsers();
+
 interface.showUsers(usersList);
 
-const usersListPreview = document.querySelectorAll(".profile__preview");
+const usersListPreview = document.querySelectorAll(".profile");
+const usersListSearch = document.querySelector(".search__input");
+
 usersListPreview.forEach((user) => {
   user.addEventListener("click", (e) => {
     let userName = "";
@@ -24,4 +27,17 @@ usersListPreview.forEach((user) => {
     lstorage.storageSetUserSession(userName, "usersList");
     window.location.href = "./userPage.html";
   });
+});
+usersListSearch.addEventListener("input", (e) => {
+  console.log(e.target.value);
+  usersListFiltered = usersList.filter((user) =>
+    user.userName.includes(e.target.value)
+  );
+  if (usersListFiltered.length > 0) {
+    interface.removeUsers();
+    interface.showUsers(usersListFiltered);
+  } else {
+    interface.removeUsers();
+    interface.showUsers(usersList);
+  }
 });
