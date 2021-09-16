@@ -1,7 +1,7 @@
 const users = new Users();
 const lStorage = new Storage();
 const form = document.querySelector(".user__form");
-const formBtn = form.querySelector(".user__btn");
+const formBtn = form.querySelector(".btn");
 const userName = form.querySelector("#userName");
 const userEmail = form.querySelector("#userEmail");
 const userPassword = form.querySelector("#userPassword");
