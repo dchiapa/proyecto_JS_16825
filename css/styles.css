@@ -286,7 +286,7 @@ section {
   width: 100%;
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 768px) {
   .profile {
     width: 50%;
   }
@@ -333,7 +333,19 @@ section {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 30%;
+  width: 80%;
+}
+
+@media screen and (min-width: 768px) {
+  .user__form {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .user__form {
+    width: 30%;
+  }
 }
 
 .user__form input {
@@ -372,7 +384,13 @@ section {
 }
 
 .content__text {
-  width: 50%;
+  width: 80%;
+}
+
+@media screen and (min-width: 768px) {
+  .content__text {
+    width: 50%;
+  }
 }
 
 .content__search {
